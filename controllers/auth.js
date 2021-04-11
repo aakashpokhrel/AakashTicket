@@ -6,9 +6,10 @@ const crypto = require("crypto");
 //--------------------------REGISTER USER-----------------
 
 exports.register = asyncHandler(async (req, res, next) => {
-  const { fullname,username,email,password } = req.body;
+  const { fname,lname,username,email,password } = req.body;
   const user = await User.create({
-   fullname,
+   fname,
+   lname,
    email,
    username,
    password,
