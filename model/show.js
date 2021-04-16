@@ -9,8 +9,9 @@ const Show = new mongoose.Schema(
             type: Number,
             required: [true,"Enter Ticket Rate"],
         },
-        ticketperiod:{
-            type: String,
+        timeperiod:{
+            type: Number,
+            
         },
         photo: {
             type: String,
