@@ -3,6 +3,7 @@ const Show = require("../model/show");
 const asyncHandler = require("../middleware/async");
 //To get the file name extension line .jpg,.png
 const path = require("path");
+const { CLIENT_RENEG_LIMIT } = require("tls");
 
 
 //--------------------CREATE show------------------
@@ -89,7 +90,6 @@ exports.deleteShow = asyncHandler(async (req, res, next) => {
 exports.ShowPhotoUpload = asyncHandler(async (req, res, next) => {
     const show = await Show.findById(req.params.id);
   
-    console.log(show);
     if (!show) {
       return next(new ErrorResponse(`No show found with ${req.params.id}`), 404);
     }
@@ -120,7 +120,7 @@ exports.ShowPhotoUpload = asyncHandler(async (req, res, next) => {
   
     file.mv(`${process.env.FILE_UPLOAD_PATH}/${file.name}`, async (err) => {
       if (err) {
-        //console.err(err);
+        console.err(err);
         return next(new ErrorResponse(`Problem with file upload`, 500));
       }
   
