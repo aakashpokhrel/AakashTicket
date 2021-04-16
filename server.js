@@ -16,9 +16,11 @@ dotenv.config({
 connectDB();
 
 // Load routes files
+const admin = require("./routes/admin");
 const auth = require("./routes/auth");
 const show = require("./routes/show");
 const booking = require("./routes/booking");
+const service = require("./routes/service");
 const { urlencoded } = require("express");
 
 // initialize out app variable with express
@@ -42,9 +44,10 @@ app.use(express.static(path.join(__dirname, "public")));
 
 // Mount routes
 app.use("/auth", auth);
+app.use("/admin", admin);
 // app.use("/api/v1/auth", auth);
 app.use("/show", show);
-
+app.use("/service",service);
 app.use("/booking",booking);
 
 // To use the custom error message
