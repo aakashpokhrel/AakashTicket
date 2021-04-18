@@ -20,6 +20,9 @@ router
 .route("/:id")
 .get(protect,getBookingById)
 .delete(protect,deleteBooking)
+
+router
+.route("/:id/update")
 .put(protect,updateBooking);
 
 module.exports = router

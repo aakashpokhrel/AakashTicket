@@ -6,6 +6,7 @@ const {
   getShow, 
   getShowById,
   deleteShow,
+  updateShow,
   ShowPhotoUpload,
   } = require("../controllers/show");
 
@@ -20,10 +21,18 @@ const {
   .route("/:id/photo")
   .put(protect, ShowPhotoUpload);
 
+  // router
+  // .route("/:id/update1")
+  // .put(protect,updateShow);
+
   router
   .route("/:id")
   .get(protect,getShowById)
   .delete(protect, deleteShow);
+
+  router
+  .route("/:id/update")
+  .put(protect,updateShow);
 
 
   module.exports = router

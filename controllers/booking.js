@@ -3,6 +3,7 @@ const Booking = require("../model/booking");
 const asyncHandler = require("../middleware/async");
 
 const path = require("path");
+const booking = require("../model/booking");
 
 
 //...................Add Booking................
@@ -64,18 +65,51 @@ exports.deleteBooking = asyncHandler(async (req, res, next) => {
 });
 
 //................Update Bookings..............
+// exports.updateBooking = asyncHandler(async (req, res, next) => {
+//     const booking = await Booking.findById(req.params.id);
+
+//     if (!booking){
+//         return next(new ErrorResponse('No Booking Found'), 404);
+//     }
+
+//     await booking.update();
+
+//     res.status(200).json({
+//         success: true,
+//         count: booking.length,
+//         data: {},
+//     });
+// });
+
+//...........NewUpdate.................
 exports.updateBooking = asyncHandler(async (req, res, next) => {
-    const booking = await Booking.findById(req.params.id);
-
-    if (!booking){
-        return next(new ErrorResponse('No Booking Found'), 404);
-    }
-
-    await booking.update();
-
-    res.status(200).json({
-        success: true,
-        count: booking.length,
-        data: {},
+    const id = req.params.id
+    // const user = await User.findById(req.params.id);
+    const {   customername,
+        location,
+        seats,} = req.body;
+  
+    // if (!user) {
+    //   return next(new ErrorResponse("User not found"), 404);
+    // }
+  
+    booking.findByIdAndUpdate(req.params.id, {customername,
+        location,
+        seats,},{new:true},
+      function (err, docs) {
+        if (err) {
+          res.status(200).json({
+            success: false,
+            error:err.message,
+          });
+        }
+        else {
+          res.status(200).json({
+            success: true,
+            data: docs,
+          });
+        }
+      }
+    )
+  
     });
-});

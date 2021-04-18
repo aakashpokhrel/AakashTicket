@@ -69,21 +69,56 @@ exports.deleteShow = asyncHandler(async (req, res, next) => {
 
 
   //-------------------UPDATE Show---------------------
-  exports.updateShow= asyncHandler(async (req, res, next) => {
-    const show = await Show.findById(req.params.id);
+  // exports.updateShow= asyncHandler(async (req, res, next) => {
+  //   const show = await Show.findByIdAndUpdate(req.params.id);
   
-    if (!show) {
-      return next(new ErrorResponse(`No show found `), 404);
-    }
+  //   if (!show) {
+  //     return next(new ErrorResponse(`No show found `), 404);
+  //   }
   
-    await show.put();
+  //   await show.put();
   
-    res.status(200).json({
-      success: true,
-      count: show.length,
-      data: {},
+  //   res.status(200).json({
+  //     success: true,
+  //     count: show.length,
+  //     data: {},
+  //   });
+  // });
+
+
+
+  //........New UpdateShow
+  exports.updateShow = asyncHandler(async (req, res, next) => {
+    const id = req.params.id
+    // const user = await User.findById(req.params.id);
+    const {   venue,
+      ticketrate,
+      timeperiod,} = req.body;
+  
+    // if (!user) {
+    //   return next(new ErrorResponse("User not found"), 404);
+    // }
+  
+    Show.findByIdAndUpdate(req.params.id, {venue,
+      ticketrate,
+      timeperiod,},{new:true},
+      function (err, docs) {
+        if (err) {
+          res.status(200).json({
+            success: false,
+            error:err.message,
+          });
+        }
+        else {
+          res.status(200).json({
+            success: true,
+            data: docs,
+          });
+        }
+      }
+    )
+  
     });
-  });
 
   // ------------------UPLOAD IMAGE-----------------------
 
